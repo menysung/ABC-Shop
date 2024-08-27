@@ -13,16 +13,90 @@
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* 사이드바 스타일 */
+        #sidebar-wrapper {
+            background-color: #f8f9fa; /* 사이드바 배경색 */
+            color: #343a40; /* 기본 텍스트 색상 */
+            min-width: 250px; /* 사이드바 최소 너비 */
+            max-width: 250px; /* 사이드바 최대 너비 */
+        }
+
+        .sidebar-heading {
+            background-color: #007bff; /* 헤더 배경색 */
+            color: #fff; /* 헤더 텍스트 색상 */
+            font-weight: bold;
+            padding: 1rem;
+        }
+
+        .list-group-item {
+            background-color: transparent;
+            color: #343a40; /* 리스트 텍스트 색상 */
+            border: none; /* 리스트 아이템 테두리 제거 */
+            font-size: 1rem; /* 리스트 텍스트 크기 */
+        }
+
+        .list-group-item:hover {
+            background-color: #e2e6ea; /* 호버 시 배경색 */
+            color: #007bff; /* 호버 시 텍스트 색상 */
+            border-radius: 0.25rem;
+            font-weight: bold;
+        }
+
+        .list-group-item:active {
+            background-color: #d8d8d8; /* 클릭 시 배경색 */
+            color: #007bff; /* 클릭 시 텍스트 색상 */
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .footer-social-icons a {
+            color: #333;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            overflow: hidden;
+        }
+
+        footer {
+            padding-top: 1rem;
+            background-color: #343a40;
+            color: #cfd8dc;
+            border-top: 1px solid #495057;
+        }
+    </style>
 </head>
 <body>
 <div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light text-center">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/}">Shop</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/}">ABC Shop</a>
         </div>
         <div class="list-group list-group-flush">
             <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/}">Home</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#productSupportCollapse" role="button" aria-expanded="false" aria-controls="customerSupportCollapse">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#productSupportCollapse" role="button" aria-expanded="false" aria-controls="productSupportCollapse">
                 Product
             </a>
             <!-- 상품 Content -->
@@ -33,6 +107,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productAllList}">All</a>
                 </div>
             </div>
+
             <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/myOrders}">My Order</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/myAccount}">My Account</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#customerSupportCollapse" role="button" aria-expanded="false" aria-controls="customerSupportCollapse">
@@ -79,17 +154,18 @@
                                 <span>CART</span>
                                 <span id="cart-item-count" class="badge bg-primary"></span>
                             </a>
-                        </li>                        <li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}"><a class="nav-link" th:href="@{/member/login}">LOGIN</a></li>
+                        </li>
+                        <li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}"><a class="nav-link" th:href="@{/member/login}">LOGIN</a></li>
                         <li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}"><a class="nav-link" th:href="@{/member/join}">JOIN</a></li>
                         <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}"><a class="nav-link" th:href="@{/logout}">LOGOUT</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="container-fluid" layout:fragment="content">
-        </div>
-    </div>
 
+
+        <div class="container-fluid" layout:fragment="content"></div>
+    </div>
 </div>
 <!-- Bootstrap core JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

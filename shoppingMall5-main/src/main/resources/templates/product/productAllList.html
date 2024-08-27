@@ -21,8 +21,9 @@
                 <select class="form-select" name="categoryId">
                     <option value="">---</option>
                     <option value="laptop" th:selected="${pageRequestDTO.categoryId == 'laptop'}">노트북</option>
-                    <option value="phone" th:selected="${pageRequestDTO.categoryId == 'phone'}">핸드폰</option>
                     <option value="tablet" th:selected="${pageRequestDTO.categoryId == 'tablet'}">태블릿</option>
+                    <option value="desktop" th:selected="${pageRequestDTO.categoryId == 'desktop'}">데스크탑</option>
+                    <option value="phone" th:selected="${pageRequestDTO.categoryId == 'phone'}">핸드폰</option>
                     <option value="etc" th:selected="${pageRequestDTO.categoryId == 'etc'}">기타</option>
                 </select>
                 <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}" placeholder="검색어를 입력해주세요...">

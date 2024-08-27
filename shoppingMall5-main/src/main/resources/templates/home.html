@@ -16,6 +16,40 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
+        /* 사이드바 스타일 */
+        #sidebar-wrapper {
+            background-color: #f8f9fa; /* 사이드바 배경색 */
+            color: #343a40; /* 기본 텍스트 색상 */
+            min-width: 250px; /* 사이드바 최소 너비 */
+            max-width: 250px; /* 사이드바 최대 너비 */
+        }
+
+        .sidebar-heading {
+            background-color: #007bff; /* 헤더 배경색 */
+            color: #fff; /* 헤더 텍스트 색상 */
+            font-weight: bold;
+            padding: 1rem;
+        }
+
+        .list-group-item {
+            background-color: transparent;
+            color: #343a40; /* 리스트 텍스트 색상 */
+            border: none; /* 리스트 아이템 테두리 제거 */
+            font-size: 1rem; /* 리스트 텍스트 크기 */
+        }
+
+        .list-group-item:hover {
+            background-color: #e2e6ea; /* 호버 시 배경색 */
+            color: #007bff; /* 호버 시 텍스트 색상 */
+            border-radius: 0.25rem;
+            font-weight: bold;
+        }
+
+        .list-group-item:active {
+            background-color: #d8d8d8; /* 클릭 시 배경색 */
+            color: #007bff; /* 클릭 시 텍스트 색상 */
+        }
+
         .align-items-center {
             display: flex;
             align-items: center;
@@ -29,21 +63,55 @@
             justify-content: center;
         }
 
+        /* Jumbotron Styles */
         .jumbotron {
-            background: linear-gradient(to right, #00aaff, #0044ff);
+            background: linear-gradient(135deg, #0062cc 0%, #00aaff 100%);
             color: #fff;
-            padding: 4rem 2rem;
-            border-radius: 0.5rem;
+            padding: 4rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        /* Card Styles */
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .card-img-container {
+            height: 200px;
+            overflow: hidden;
         }
 
         .card-img-top {
-            border-radius: 0.5rem;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card-img-top:hover {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 1.5rem;
         }
 
         .map-container {
             width: 100%;
             height: 300px;
             overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
             margin-left: 30%;
         }
@@ -57,6 +125,9 @@
 
         footer {
             padding-top: 1rem;
+            background-color: #343a40;
+            color: #cfd8dc;
+            border-top: 1px solid #495057;
         }
     </style>
 </head>
@@ -148,38 +219,48 @@
             <div class="container mb-4">
                 <h2 class="text-center mb-4">New Arrivals</h2>
                 <div class="row">
+                    <!-- 상품 1 -->
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="New Product1">
-                            <div class="card-body">
-                                <h5 class="card-title">New Product1</h5>
-                                <p class="card-text">Browse our latest collection of products.</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
+                            <div class="card-img-container">
+                                <img src="/images/77c479c6-fff0-4888-b0f6-04a9a0ec8254_아이맥.png" class="card-img-top" alt="New Product1">
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="New Product2">
                             <div class="card-body">
-                                <h5 class="card-title">New Product2</h5>
-                                <p class="card-text">Discover the latest trends and styles.</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="New Product3">
-                            <div class="card-body">
-                                <h5 class="card-title">New Product3</h5>
+                                <h5 class="card-title">iMac</h5>
                                 <p class="card-text">Check out our newest arrivals.</p>
-                                <a href="#" class="btn btn-primary">View Details</a>
+                                <a th:href="@{/product/productDetail(id=${67})}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 상품 2 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-img-container">
+                                <img src="/images/a525a5f6-d8bf-4556-a6eb-ac78e2766812_맥북프로.png" class="card-img-top" alt="New Product2">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">MacBook Pro 14</h5>
+                                <p class="card-text">Check out our newest arrivals.</p>
+                                <a th:href="@{/product/productDetail(id=${66})}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 상품 3 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <div class="card-img-container">
+                                <img src="/images/6f2ef0e7-5fe5-4960-b60b-6caca853c332_아이패드프로.png" class="card-img-top" alt="New Product3">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">iPad Pro</h5>
+                                <p class="card-text">Check out our newest arrivals.</p>
+                                <a th:href="@{/product/productDetail(id=${68})}" class="btn btn-primary">View Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             <div class="row mt-4 align-items-center">
                 <div class="col-md-6 d-flex justify-content-center">
@@ -193,6 +274,7 @@
                         <p class="mb-3 text-center">
                             부산광역시 부산진구 중앙대로 708<br>
                             ABC 빌딩, 5층<br>
+                            <br>
                             📞 051-123-4567
                         </p>
                     </div>

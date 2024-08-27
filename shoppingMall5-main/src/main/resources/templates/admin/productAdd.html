@@ -41,8 +41,9 @@
                 <select class="form-select" id="categoryId" name="categoryId">
                     <option value="">---</option>
                     <option value="laptop" th:selected="${categoryId == 'laptop'}">노트북</option>
-                    <option value="phone" th:selected="${categoryId == 'phone'}">핸드폰</option>
                     <option value="tablet" th:selected="${categoryId == 'tablet'}">태블릿</option>
+                    <option value="desktop" th:selected="${categoryId == 'desktop'}">데스크탑</option>
+                    <option value="phone" th:selected="${categoryId == 'phone'}">핸드폰</option>
                     <option value="etc" th:selected="${categoryId == 'etc'}">기타</option>
                 </select>
             </div>
