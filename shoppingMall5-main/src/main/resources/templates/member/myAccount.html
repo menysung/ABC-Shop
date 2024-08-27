@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/basic.html}">
+<div layout:fragment="content">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>회원정보 수정</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <style>
+        .btn-primary{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .btn-danger{
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5 text-center">
+    <h1>회원정보 수정</h1>
+    <div class="card mt-3">
+        <form th:action="@{/member/myAccount}" method="post" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control text-center" id="name" placeholder="Enter your name" th:value="${member.mid}" name="name" autocomplete="name" disabled>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control text-center" id="email" placeholder="Enter your email" th:value="${member.email}" name="email" autocomplete="email" disabled>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control text-center" id="phone" placeholder="Enter your phone number" th:value="${member.phone}" name="phone" autocomplete="tel">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control text-center" id="address" placeholder="Enter your address" th:value="${member.address}" name="address" autocomplete="address">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control text-center" id="password" placeholder="Enter your new password" name="mpw" autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+
+        <form id="deleteForm" action="/member/delete" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-danger" onclick="return handleDeleteAccount()">탈퇴하기</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    function handleFormSubmit(event) {
+        event.preventDefault(); // 기본 폼 제출 방지
+        var form = event.target;
+        var formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: {
+                'Accept': 'application/json',
+            }
+        })
+            .then(response => response.text()) // 응답텍스트로 변환
+            .then(text => {
+                console.log("Fetch response text: ", text);
+                if (text.includes('success')) {
+                    alert('성공적으로 변경되었습니다!');
+                } else {
+                    alert('변경에 실패했습니다.');
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error: ', error);
+                alert('알 수 없는 오류가 발생했습니다.');
+            });
+    }
+    function handleDeleteAccount() {
+        if (confirm("정말 탈퇴하시겠습니까?")) {
+            fetch(document.getElementById('deleteForm').action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            })
+                .then(response => response.json()) // JSON 응답으로 처리
+                .then(data => {
+                    if (data.deleteResult === 'success') {
+                        alert('회원 탈퇴가 완료되었습니다.');
+                        window.location.href = data.redirectUrl; // 리디렉션 URL로 이동
+                    } else {
+                        alert('탈퇴 처리에 실패했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('알 수 없는 오류가 발생했습니다.');
+                });
+            return false; // 폼 제출 방지
+        }
+        return false; // 사용자가 취소를 클릭한 경우 폼 제출을 막음
+    }
+
+
+</script>
+
+</body>
+</div>
+</html>

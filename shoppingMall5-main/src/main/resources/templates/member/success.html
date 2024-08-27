@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/basic.html}">
+<div layout:fragment="content">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>주문 완료</title>
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    </head>
+    <body>
+    <div class="container mt-4">
+        <h1 class="text-center">주문이 완료되었습니다.</h1>
+        <div class="card">
+            <div class="card-body text-center">
+                <h4>주문번호</h4>
+                <p th:text="${orderNumber}">주문 번호</p>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>
+</html>
+
+
+
+

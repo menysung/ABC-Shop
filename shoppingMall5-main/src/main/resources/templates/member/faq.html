@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>자주하는 질문</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-5 text-center">
+        <h1>자주하는 질문</h1>
+        <div class="card mt-3">
+            <div class="card-header">교환 & 반품 방법</div>
+            <div class="card-body">
+                <p>상품 수령 후 7일 이내 유선 및 문의를 통해 접수 해주세요.
+                <br>단순 변심으로 인한 반품 및 교환 시 기본 배송비는 6,000원이 부과되며
+                <br>타 택배 혹은 우케국 택배로 직접 보내주실 경우 접수 시 미리 말씀해 주세요.</p>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">교환 & 반품 기간</div>
+            <div class="card-body">
+                <p>상품 수령 후 7일 이내 유선 및 문의를 통해 접수 해주세요.
+                <br>검수 후 상품에 이상이 없을 시, 3-5영업일 이내 교환 및 반품이 이루어집니다.
+                <br>단, 상품이 사용되었거나 훼손된 경우 교환 및 반품이 불가합니다.</p>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">불량품 처리 방식</div>
+            <div class="card-body">
+                <p>상품에 불량이 있는 경우, 고객센터 051-753-5600 또는 1:1 문의 남겨주시면
+                <br>빠른 시일 내에 교환 또는 환불 처리를 도와드리겠습니다.</p>
+            </div>
+        </div>
+        <div class="card mt-3">
+            <div class="card-header">배송 기간</div>
+            <div class="card-body">
+                <p>재고가 보유된 상품의 경우 영업일 기준 1-3일 이내 출고됩니다.
+                <br>상품마다 배송 시간에 차이가 있으며, 자세한 문의사항은 고객센터로 문의해 주세요.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

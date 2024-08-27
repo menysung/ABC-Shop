@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 링크 처리-->
+<!-- @{/} 는 기본주소(localhost:8080/)-->
+<a th:href="@{/hello(name='AAA', age=16)}">Go to /hello</a>
+
+<h4>[[${list}]]</h4>
+<hr/>
+<h4 th:text="${list}"></h4>
+<hr/>
+<ul>
+    <li th:each="str: ${list}" th:text="${str}"></li>
+</ul>
+<ul>
+    <th:block th:each="str: ${list}">
+        <li>[[${str}]]</li>
+    </th:block>
+</ul>
+</body>
+</html>

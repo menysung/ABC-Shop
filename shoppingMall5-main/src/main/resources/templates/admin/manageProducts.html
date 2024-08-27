@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/basic.html}">
+
+<div layout:fragment="content">
+    <head>
+        <meta charset="UTF-8">
+        <title>Manage Products</title>
+        <link rel="stylesheet" href="/css/styles.css">
+    </head>
+    <body>
+    <h1>Manage Products</h1>
+
+    <a href="/admin/addProduct">Add Product</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.productName}">Product Name</td>
+            <td th:text="${product.price}">Price</td>
+            <td>
+                <form th:action="@{/admin/deleteProduct}" method="post">
+                    <input type="hidden" th:value="${product.id}" name="productId"/>
+                    <button type="submit">Delete</button>
+                </form>
+                <form th:action="@{/admin/updateProduct}" method="post">
+                    <input type="hidden" th:value="${product.id}" name="productId"/>
+                    <input type="text" th:value="${product.productName}" name="productName"/>
+                    <input type="text" th:value="${product.price}" name="price"/>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="/admin">Back to Dashboard</a>
+    </body>
+</html>

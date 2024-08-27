@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>ABC Shopping Mall</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Maps Embed API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY" async defer></script>
+    <style>
+        .align-items-center {
+            display: flex;
+            align-items: center;
+        }
+
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-center {
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar-->
+    <div class="border-end bg-white" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-light text-center">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/}">ABC Shop</a>
+        </div>
+        <div class="list-group list-group-flush">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/}">Home</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#productSupportCollapse" role="button" aria-expanded="false" aria-controls="productSupportCollapse">
+                Product
+            </a>
+            <!-- 상품 Content -->
+            <div class="collapse" id="productSupportCollapse">
+                <div class="card card-body">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productSaleList}">SALE</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productNewList}">New</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productAllList}">All</a>
+                </div>
+            </div>
+
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/myOrders}">My Order</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/myAccount}">My Account</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#customerSupportCollapse" role="button" aria-expanded="false" aria-controls="customerSupportCollapse">
+                고객센터
+            </a>
+            <!-- 고객센터 Content -->
+            <div class="collapse" id="customerSupportCollapse">
+                <div class="card card-body">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/notice}">공지사항</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/faq}">자주하는 질문</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/board/list}">1:1 문의</a>
+                </div>
+            </div>
+
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#adminSupportCollapse" role="button" aria-expanded="false" aria-controls="adminSupportCollapse">
+                    관리자
+                </a>
+                <!-- 관리자 Content -->
+                <div class="collapse" id="adminSupportCollapse">
+                    <div class="card card-body">
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/admin/productAdd}">상품추가</a>
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/admin/manageUsers}">회원관리</a>
+                        <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/admin/orderList}">주문관리</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="page-content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <div class="container-fluid">
+                <button class="btn btn-primary" id="sidebarToggle">Toggle Sidebar</button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                        <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}">
+                            <a class="nav-link" th:href="@{/member/myAccount}" th:text="'Hello, ' + ${#authentication.getName()} + '!'"></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/member/myCart}">
+                                <span>CART</span>
+                                <span id="cart-item-count" class="badge bg-primary"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}"><a class="nav-link" th:href="@{/member/login}">LOGIN</a></li>
+                        <li class="nav-item" th:if="${#authorization.expression('isAnonymous()')}"><a class="nav-link" th:href="@{/member/join}">JOIN</a></li>
+                        <li class="nav-item" th:if="${#authorization.expression('isAuthenticated()')}"><a class="nav-link" th:href="@{/logout}">LOGOUT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid" layout:fragment="content">
+            <!-- Hero Section -->
+            <div class="jumbotron text-center bg-primary text-white rounded mb-4">
+                <h1 class="display-4">Welcome to ABC Shop</h1>
+                <!-- Optional: <p class="lead">Discover the best deals and exclusive offers just for you.</p> -->
+                <!-- Optional: <a class="btn btn-light btn-lg" th:href="@{/product}" role="button">Shop Now</a> -->
+            </div>
+
+            <!-- New Arrivals -->
+            <div class="container mb-4">
+                <h2 class="text-center mb-4">New Arrivals</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="New Product1">
+                            <div class="card-body">
+                                <h5 class="card-title">New Product1</h5>
+                                <p class="card-text">Browse our latest products.</p>
+                                <a th:href="@{/product/productDetail(id=${43})}" class="btn btn-primary">Show Product</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="New Product2">
+                            <div class="card-body">
+                                <h5 class="card-title">New Product2</h5>
+                                <p class="card-text">Browse our latest products.</p>
+                                <a th:href="@{/product/productDetail(id=${44})}" class="btn btn-primary">Show Product</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="New Product3">
+                            <div class="card-body">
+                                <h5 class="card-title">New Product3</h5>
+                                <p class="card-text">Browse our latest products.</p>
+                                <a th:href="@{/product/productDetail(id=${45})}" class="btn btn-primary">Show Product</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4 align-items-center">
+                <div class="col-md-6 d-flex justify-content-center">
+                    <div class="card border-0 rounded-0">
+                        <div class="card-body p-0">
+                            <!-- Google Maps Embed -->
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126739.13947259842!2d129.02120238099346!3d35.17925498120315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356118d7c2815117%3A0x6a29de9fc9a8d78b!2z6rK97ZiQ64uk7ZWY7Iuc!5e0!3m2!1sko!2skr!4v1692706756098!5m2!1sko!2skr&center=35.17925498120315,129.02120238099346&zoom=21" width="200%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-center">
+                    <div>
+                        <h5 class="mb-3 text-center">오시는 길</h5>
+                        <p class="mb-3 text-center">
+                            부산광역시 부산진구 중앙대로 708<br>
+                            ABC 빌딩 5층<br>
+                            전화: 051-123-4567
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- 푸터 -->
+        <footer class="bg-light text-center py-4 mt-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+<!--                        <h5>회사 정보</h5>-->
+                        <ul class="list-unstyled">
+                            <li>대표이사: 홍길동</li>
+                            <li>사업자등록번호: 123-45-67890</li>
+                            <li>전화: 051-123-4567</li>
+                            <li>이메일: <a href="mailto:info@abcshopping.com">info@abcshopping.com</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+<!--                        <h5>주소</h5>-->
+                        <p>부산광역시 부산진구 중앙대로 708<br>ABC 빌딩 5층</p>
+                    </div>
+                    <div class="col-md-4">
+<!--                        <h5>소셜 미디어</h5>-->
+                        <a href="#" class="me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <p class="mb-0">&copy; 2024 ABC 쇼핑몰. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<!-- Bootstrap core JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS -->
+<script th:src="@{/js/scripts.js}"></script>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: '/member/cartItemCount',
+            type: 'GET',
+            success: function(count) {
+                $('#cart-item-count').text(count);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cart item count:', error);
+            }
+        });
+    });
+</script>
+</body>
+</html>

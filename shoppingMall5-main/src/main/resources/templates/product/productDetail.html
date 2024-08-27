@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/basic.html}">
+<div layout:fragment="content">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>상품 상세 페이지</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <!-- jQuery CDN 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .product-name {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+<!--    <h2>상품 상세 정보</h2>-->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="product-name" th:text="${product.name}">상품 제목</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- 상품 이미지 -->
+
+                        <img class="image-right" th:src="@{|/images/${product.image}|}" alt="상품 이미지" style="width: 300px">
+
+                </div>
+                <div class="col-md-6">
+                    <!-- 상품 정보 -->
+                    <p><strong>가격: ₩</strong><span th:text="${product.formattedPrice}">가격</span></p>
+                    <p><strong>설명:</strong></p>
+                    <p th:text="${product.description}">상품 설명</p>
+<!--                    <p><strong>카테고리:</strong> <span th:text="${product.categoryId}">카테고리 ID</span></p>-->
+                    <p><strong>배송: </strong>주문 완료 후 영업일 기준 2-3일 후 <br>순차적으로 발송되는 상품입니다.</p>
+
+                </div>
+                <div class="text-center" style="margin-top: 20px;">
+                    <button class="btn btn-primary btnCart"
+                            th:data-product-id="${product.id}"
+                            onclick="addToCart(this);">
+                        장바구니 추가하기
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                <a class="btn btn-danger btnDelete float-end"
+                   th:href="@{/admin/productDelete(productId=${product.id})}"
+                   onclick="return confirm('정말로 삭제하시겠습니까?')">Delete</a>
+
+                <a class="btn btn-primary btnUpdate float-end"
+                   th:href="@{|/admin/productEdit?productId=${product.id}|}">Modify</a>
+            </div>
+
+            <a class="btn btn-secondary"
+               th:href="@{/product/productAllList(page=${page}, size=${size}, keyword=${keyword})}">
+                List
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addToCart(button) {
+        var productId = $(button).data('product-id');
+        console.log('Retrieved productId:', productId);  // 디버깅 로그
+
+        if (productId === undefined || productId === null || productId === '') {
+            alert('상품 ID가 유효하지 않습니다.');
+            return;
+        }
+
+        // productId를 숫자로 변환
+        productId = Number(productId);
+        console.log('productId after conversion:', productId);  // 변환 후 값 확인
+
+        if (isNaN(productId)) {
+            alert('상품 ID가 유효하지 않습니다.');
+            return;
+        }
+
+        $.ajax({
+            url: '/member/addToCart',
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            data: {
+                productId: productId,
+                quantity: 1 // 기본 수량
+            },
+            success: function(response) {
+                alert('장바구니에 추가되었습니다!');
+                window.location.href = '/member/myCart';
+            },
+            error: function(xhr, status, error) {
+                console.error('Error details:', xhr.responseText);
+                alert('장바구니 추가 실패: ' + error);
+            }
+        });
+    }
+
+
+</script>
+</body>
+</div>
+</html>

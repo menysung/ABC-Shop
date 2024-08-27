@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/basic.html}">
+<div layout:fragment="content">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>주문 확인</title>
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+        <style>
+            .btn-secondary{
+                margin-top: 10px;
+            }
+            .btn-primary{
+                margin-top: 10px;
+            }
+            .form-group{
+                margin-bottom: 10px;
+            }
+            .table th, .table td {
+                text-align: center; /* 가운데 정렬 */
+                vertical-align: middle;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container mt-4">
+        <h1 class="text-center">주문 확인</h1>
+        <div class="card">
+            <div class="card-body">
+                <!-- 주문 내용 표시 테이블 -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>상품명</th>
+                        <th>수량</th>
+                        <th>금액</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="item : ${cart}">
+                    <tr>
+                        <td style="vertical-align: middle;"><img th:src="@{/images/{image}(image=${item.image})}" alt="Product Image" style="width: 50px; height: 40px;"></td>
+                        <td style="vertical-align: middle;" th:text="${item.productName}">상품명</td>
+                        <td style="vertical-align: middle;" th:text="${item.quantity}">수량</td>
+                        <td style="vertical-align: middle;" th:text="${item.price * item.quantity}">총 금액</td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-center" style="vertical-align: middle;">배송비</td>
+                        <td id="shipment" class="text-center" style="vertical-align: middle;" th:text="${shippingCost}">0원</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="text-center" style="vertical-align: middle;">총 결제 금액</td>
+                        <td id="total-amount" class="text-center" style="vertical-align: middle;" th:text="${totalAmount}">₩0</td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+                <!-- 결제 정보 입력 폼 -->
+                <form action="/member/order/payment" method="post">
+                    <div class="form-group">
+                        <label for="postcode">우편번호</label>
+                        <input type="text" class="form-control" id="postcode" name="postcode" readonly>
+                        <button type="button" class="btn btn-secondary" onclick="execDaumPostcode()">주소 검색</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">기본 주소</label>
+                        <input type="text" class="form-control" id="address" name="address" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="detailAddress">상세 주소</label>
+                        <input type="text" class="form-control" id="detailAddress" name="detailAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">결제 방법</label>
+                        <select class="form-control" id="paymentMethod" name="paymentMethod">
+                            <option value="creditCard">신용카드</option>
+                            <option value="paypal">계좌이체</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="creditCardInfo" style="display:none;">
+                        <label for="cardNumber">카드 번호</label>
+                        <input type="text" class="form-control" id="cardNumber" name="cardNumber">
+                        <label for="expiryDate">만료일</label>
+                        <input type="text" class="form-control" id="expiryDate" name="expiryDate">
+                        <label for="cvv">CVV</label>
+                        <input type="text" class="form-control" id="cvv" name="cvv">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">결제하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var addr = data.roadAddress ? data.roadAddress : data.jibunAddress;
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById('address').value = addr;
+                    document.getElementById('detailAddress').focus();
+                }
+            }).open();
+        }
+
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            var cardInfo = document.getElementById('creditCardInfo');
+            if (this.value === 'creditCard') {
+                cardInfo.style.display = 'block';
+            } else {
+                cardInfo.style.display = 'none';
+            }
+        });
+    </script>
+    </body>
+</html>

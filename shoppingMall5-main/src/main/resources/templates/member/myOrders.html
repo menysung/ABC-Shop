@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/basic.html}">
+<div layout:fragment="content">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>주문 내역</title>
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+        <style>
+            .card-body {
+                text-align: center;
+            }
+            /* 상태별 스타일 정의 */
+            .status-pending {
+                color: black;
+                font-weight: bold;
+            }
+            .status-approved {
+                color: blue;
+                font-weight: bold;
+            }
+            .status-cancelled {
+                color: red;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="container mt-4 text-center">
+        <div class="card">
+            <div class="card-header">
+                주문 내역
+            </div>
+            <div class="card-body">
+                <!-- 주문 내역이 없는 경우 -->
+                <div id="empty-orders-message" th:if="${#lists.isEmpty(orders)}">
+                    <p>주문 내역이 없습니다</p>
+                </div>
+                <!-- 주문 내역이 있는 경우 -->
+                <div id="orders-table" th:unless="${#lists.isEmpty(orders)}">
+                    <table class="table text-center">
+                        <thead>
+                        <tr>
+                            <th>주문번호</th>
+                            <th>상품</th>
+                            <th>날짜</th>
+                            <th>결제금액</th>
+                            <th>주문상태</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order : ${orders}">
+                            <td th:text="${order.orderNumber}">주문 번호</td>
+                            <td>
+                                <ul th:each="item : ${order.items}">
+                                    <li>
+                                        <span th:text="${item.productName}">상품명</span> X
+                                        <span th:text="${item.quantity}">수량</span>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td th:text="${order.orderDate}">주문 날짜</td>
+                            <td th:text="'₩' + ${#numbers.formatInteger(order.totalPrice, 0, 'COMMA')}">총 금액</td>
+                            <td>
+                                <span th:switch="${order.status}">
+                                    <span th:case="'PENDING'" th:class="'status-pending'">대기중</span>
+                                    <span th:case="'APPROVED'" th:class="'status-approved'">승인됨</span>
+                                    <span th:case="'CANCELLED'" th:class="'status-cancelled'">취소됨</span>
+                                    <span th:case="*">대기중</span>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>
+</html>
