@@ -19,7 +19,7 @@
         <form action="/product/productAllList" method="get">
             <div class="input-group mb-3">
                 <select class="form-select" name="categoryId">
-                    <option value="">---</option>
+                    <option value="">ALL</option>
                     <option value="laptop" th:selected="${pageRequestDTO.categoryId == 'laptop'}">노트북</option>
                     <option value="tablet" th:selected="${pageRequestDTO.categoryId == 'tablet'}">태블릿</option>
                     <option value="desktop" th:selected="${pageRequestDTO.categoryId == 'desktop'}">데스크탑</option>
