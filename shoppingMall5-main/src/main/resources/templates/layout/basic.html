@@ -96,18 +96,7 @@
         </div>
         <div class="list-group list-group-flush">
             <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/}">Home</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#productSupportCollapse" role="button" aria-expanded="false" aria-controls="productSupportCollapse">
-                Product
-            </a>
-            <!-- 상품 Content -->
-            <div class="collapse" id="productSupportCollapse">
-                <div class="card card-body">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productSaleList}">SALE</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productNewList}">New</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productAllList}">All</a>
-                </div>
-            </div>
-
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/product/productAllList}">Product</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/myOrders}">My Order</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/member/myAccount}">My Account</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" href="#customerSupportCollapse" role="button" aria-expanded="false" aria-controls="customerSupportCollapse">

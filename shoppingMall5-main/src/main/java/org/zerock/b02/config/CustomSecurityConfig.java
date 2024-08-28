@@ -54,7 +54,7 @@ public class CustomSecurityConfig {
                         .requestMatchers("/member/myAccount").authenticated()
                         .requestMatchers("/member/myCart").authenticated()
                         .requestMatchers("/member/myOrders").authenticated()
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+//                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/product/**").permitAll()
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
@@ -98,6 +98,6 @@ public class CustomSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) ->
-                web.ignoring().requestMatchers("/css/**", "/js/**");
+                web.ignoring().requestMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico");
     }
 }
