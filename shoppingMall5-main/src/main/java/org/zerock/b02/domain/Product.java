@@ -26,6 +26,8 @@ public class Product {
     private String slug;
     private String description;
     private String image;
+    private String brand;
+    
     @Column(precision = 19, scale = 2)
     private BigDecimal price;
 

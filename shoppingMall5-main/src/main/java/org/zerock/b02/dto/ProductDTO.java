@@ -20,6 +20,7 @@ public class ProductDTO {
     private String slug;
     private String description;
     private String categoryId;
+    private String brand;
 
     // 가격을 쉼표로 구분된 문자열로 반환하는 메서드
     public String getFormattedPrice() {

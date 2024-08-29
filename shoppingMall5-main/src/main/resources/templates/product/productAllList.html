@@ -48,7 +48,8 @@
                             <thead>
                             <tr>
                                 <th scope="col" style="width: 150px;">이미지</th>
-                                <th scope="col" style="width: 300px;">제목</th>
+                                <th scope="col" style="width: 150px;">브랜드</th>
+                                <th scope="col" style="width: 150px;">제목</th>
                                 <th scope="col" style="width: 150px;">가격</th>
                             </tr>
                             </thead>
@@ -57,7 +58,7 @@
                                 <td style="vertical-align: middle;">
                                     <img th:src="@{|/images/${product.image}|}" alt="상품 이미지" style="width: 100px;">
                                 </td>
-
+                                <td style="vertical-align: middle;" th:text="${product.brand}">브랜드</td> <!-- 브랜드 표시 -->
                                 <td style="vertical-align: middle;">
                                     <!-- 상품 상세 페이지로 이동 -->
                                     <a th:text="${product.name}" th:href="@{/product/productDetail(id=${product.id}, page=${pageRequestDTO.page}, size=${pageRequestDTO.size}, keyword=${pageRequestDTO.keyword})}">

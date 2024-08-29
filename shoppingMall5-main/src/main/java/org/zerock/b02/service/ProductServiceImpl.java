@@ -38,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
                 .price(productDTO.getPrice()) // BigDecimal 그대로 사용
                 .categoryId(productDTO.getCategoryId())
                 .image(productDTO.getImage())
+                .brand(productDTO.getBrand())
                 .build();
 
         productRepository.save(product);
@@ -90,6 +91,7 @@ public class ProductServiceImpl implements ProductService {
                 .image(product.getImage())
                 .description(product.getDescription())
                 .categoryId(product.getCategoryId())
+                .brand(product.getBrand())
                 .build();
     }
 

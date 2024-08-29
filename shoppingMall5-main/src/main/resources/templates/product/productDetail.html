@@ -36,6 +36,7 @@
                 </div>
                 <div class="col-md-6">
                     <!-- 상품 정보 -->
+                    <p><strong>브랜드:</strong> <span th:text="${product.brand}">브랜드 이름</span></p>
                     <p><strong>가격: ₩</strong><span th:text="${product.formattedPrice}">가격</span></p>
                     <p><strong>설명:</strong></p>
                     <p th:text="${product.description}">상품 설명</p>
